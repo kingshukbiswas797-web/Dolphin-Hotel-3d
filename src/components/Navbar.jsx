@@ -80,11 +80,15 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
                 className="text-white text-3xl font-italiana uppercase tracking-widest"
               >
-              </motion.div>
+                {link.name}
+              </Link>
             ))}
+            <button className="mt-8 px-12 py-4 border border-white text-white text-sm uppercase tracking-widest font-bold hover:bg-white hover:text-[#FF0000] transition-colors duration-300">
+              Access System
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.nav>
   );
 }
