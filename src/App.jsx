@@ -48,54 +48,14 @@ function App() {
     };
   }, []);
 
-  const [showSplash, setShowSplash] = useState(true); // Always show splash for testing
-
-  const handleSplashComplete = () => {
-    setShowSplash(false);
-    sessionStorage.setItem('splashShown', 'true');
-  };
-
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePos({
-        x: (e.clientX / window.innerWidth) - 0.5,
-        y: (e.clientY / window.innerHeight) - 0.5,
-      });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   return (
     <Router>
-      <div className="relative min-h-screen text-white overflow-x-hidden">
-        {/* Wildly Reacting Background Image */}
-        <div 
-          className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat transition-transform duration-75 ease-out"
-          style={{ 
-            backgroundImage: 'url(/assets/interior_1.jpg)',
-            transform: `scale(1.2) translate(${mousePos.x * -80}px, ${mousePos.y * -80}px)`,
-            filter: `hue-rotate(${mousePos.x * 90}deg) saturate(${1 + Math.abs(mousePos.y) * 2}) brightness(0.6)`
-          }}
-        ></div>
-        
-        {/* Dark overlay to ensure text readability */}
-        <div className="fixed inset-0 z-0 bg-background/80 backdrop-blur-sm mix-blend-multiply"></div>
-
+      <div className="relative min-h-screen text-white overflow-x-hidden bg-[#FF0000]">
         <LayoutGroup>
           <div className="relative z-10 flex flex-col min-h-screen">
-            {showSplash && <Splash onComplete={handleSplashComplete} />}
-            
-            {!showSplash && (
-              <>
-                <Navbar />
-                <main className="pt-24 pb-12 flex-1">
-                  <AnimatedRoutes />
-                </main>
-              </>
-            )}
+            <main className="flex-1 flex flex-col">
+              <AnimatedRoutes />
+            </main>
           </div>
         </LayoutGroup>
       </div>
