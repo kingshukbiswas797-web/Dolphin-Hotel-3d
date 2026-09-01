@@ -1,9 +1,31 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
-import { signatureDishes } from '../data/menuData';
+
+const signatureDishes = [
+  {
+    title: "Dollphin Special MURG",
+    desc: "A bold, heavily spiced centerpiece dish commanding absolute attention.",
+    img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&q=80&w=600"
+  },
+  {
+    title: "Hilsa Sorse",
+    desc: "Aggressive mustard notes cutting through rich, slow-cooked river fish.",
+    img: "https://images.unsplash.com/photo-1588168333986-5b20928eb250?auto=format&fit=crop&q=80&w=600"
+  },
+  {
+    title: "Mutton Handi",
+    desc: "Eight pieces of uncompromising, slow-cooked indulgence.",
+    img: "https://images.unsplash.com/photo-1544025162-84a14f494871?auto=format&fit=crop&q=80&w=600"
+  },
+  {
+    title: "Prawn Malai Curry",
+    desc: "A brutalist take on coastal richness. Massive flavors, zero apologies.",
+    img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&q=80&w=600"
+  }
+];
 
 const SPOTLIGHT_R = 260;
 
