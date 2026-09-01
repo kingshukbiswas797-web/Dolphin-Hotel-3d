@@ -84,7 +84,7 @@ export default function Home() {
           <motion.div 
             initial={{ opacity: 0, x: 200 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ type: "spring", stiffness: 50, damping: 20, delay: 0.2 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.2 }}
             style={{ x: useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]) }}
             className="whitespace-nowrap flex justify-center w-full"
           >
@@ -97,7 +97,7 @@ export default function Home() {
           <motion.div 
             initial={{ opacity: 0, x: -200 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ type: "spring", stiffness: 50, damping: 20, delay: 0.4 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.4 }}
             style={{ x: useTransform(scrollYProgress, [0, 1], ["0%", "50%"]) }}
             className="whitespace-nowrap flex justify-center w-full -mt-[2vw]"
           >
@@ -113,7 +113,7 @@ export default function Home() {
           <motion.div 
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: "spring", stiffness: 100, delay: 0.8 }}
+            transition={{ type: "spring", stiffness: 200, delay: 0.8 }}
             style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "300%"]) }}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-full text-center pointer-events-none mix-blend-exclusion"
           >
@@ -130,7 +130,7 @@ export default function Home() {
           >
             <Link 
               to="/menu" 
-              className="px-12 py-5 bg-gold-500 text-black font-black uppercase tracking-[0.3em] text-lg hover:scale-110 transition-transform duration-300 shadow-[0_0_30px_rgba(207,164,90,0.5)]"
+              className="px-12 py-5 bg-gold-500 text-black font-black uppercase tracking-[0.3em] text-lg hover:bg-white transition-colors duration-300 border-4 border-black"
             >
               Discover Menu
             </Link>
@@ -138,169 +138,86 @@ export default function Home() {
           
         </div>
 
-        {/* Culinary Philosophy Section */}
-        <div className="w-full py-32 px-6 flex justify-center bg-gradient-to-b from-transparent to-backgroundAlt/80 border-t border-gold-500/10">
-          <div className="max-w-6xl w-full grid md:grid-cols-2 gap-16 items-center">
-            <motion.div
+        {/* Brutalist Grid Section */}
+        <div className="w-full bg-black/90 border-t-8 border-gold-500 relative z-20">
+          <div className="max-w-[100vw] grid md:grid-cols-2 gap-0 border-b-8 border-gold-500">
+            
+            {/* Left Block */}
+            <motion.div 
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="p-10 md:p-20 border-b md:border-b-0 md:border-r-8 border-gold-500 flex flex-col justify-center"
             >
-              <h2 className="text-4xl md:text-5xl font-display text-gold-500 mb-6 tracking-widest">Our Philosophy</h2>
-              <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                At Dolphin Hotel, we believe that a truly memorable dining experience goes beyond just food. It is an orchestration of the finest ingredients, masterful techniques, and an ambiance that speaks to the soul.
+              <h2 className="text-5xl md:text-7xl font-display font-black text-gold-500 uppercase leading-[0.8] mb-8">
+                The<br/>Philosophy
+              </h2>
+              <p className="text-xl text-gray-300 font-sans font-medium uppercase tracking-widest leading-relaxed border-l-8 border-gold-500 pl-6">
+                Culinary excellence is not polite. It is a bold statement of flavor, history, and aggression.
               </p>
-              <p className="text-gray-300 text-lg leading-relaxed mb-8">
-                Our chefs bring decades of heritage from across the continent, crafting dishes that honor traditional Indian, Bengali, and Chinese roots while elevating them into a modern classic context.
-              </p>
-              <Link to="/about" className="text-gold-500 hover:text-gold-400 flex items-center gap-2 font-medium tracking-widest uppercase text-sm group">
-                Read our story <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
-              </Link>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8 }}
-              className="relative rounded-2xl overflow-hidden border border-gold-500/30 shadow-[0_0_30px_rgba(207,164,90,0.15)] aspect-[4/5] md:aspect-auto h-full min-h-[400px]"
-            >
+
+            {/* Right Block (Image) */}
+            <div className="relative aspect-square md:aspect-auto overflow-hidden group">
               <img 
                 src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=800" 
                 alt="Chef preparing food" 
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover grayscale contrast-150 group-hover:grayscale-0 transition-all duration-500"
               />
-              <div className="absolute inset-0 bg-background/30 mix-blend-multiply"></div>
-            </motion.div>
+            </div>
+            
           </div>
-        </div>
 
-        {/* Signature Dishes Section */}
-        <div className="w-full py-32 px-6 flex justify-center bg-background/90 backdrop-blur-xl border-t border-gold-500/10">
-          <div className="max-w-7xl w-full flex flex-col items-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-20"
-            >
-              <h2 className="text-4xl md:text-5xl font-display text-gold-500 mb-4 tracking-widest">Signature Masterpieces</h2>
-              <p className="text-gray-400 font-sans tracking-wide">A glimpse into our most celebrated dishes</p>
-              <div className="w-16 h-[2px] bg-gold-500/50 mx-auto mt-6"></div>
-            </motion.div>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
+          {/* Signature Dishes Bento Grid */}
+          <div className="w-full p-6 md:p-12">
+            <h2 className="text-[8vw] leading-none font-display font-black text-transparent mb-12" style={{ WebkitTextStroke: '2px #cfa45a' }}>
+              SIGNATURES
+            </h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
               {signatureDishes.map((dish, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: i * 0.15 }}
-                  className="group cursor-pointer rounded-xl overflow-hidden border border-gold-500/20 bg-backgroundAlt/50 shadow-xl"
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                  className="group cursor-pointer border-4 border-gold-500 bg-background/80 hover:bg-gold-500 hover:text-black transition-colors duration-300 flex flex-col"
                 >
-                  <div className="aspect-square overflow-hidden relative">
+                  <div className="aspect-square overflow-hidden border-b-4 border-gold-500">
                     <img 
                       src={dish.img} 
                       alt={dish.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="font-display text-gold-400 text-xl mb-2">{dish.title}</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">{dish.desc}</p>
+                  <div className="p-6 flex-1 flex flex-col justify-between">
+                    <h3 className="font-display font-black text-2xl uppercase mb-4">{dish.title}</h3>
+                    <p className="text-sm font-bold tracking-widest uppercase opacity-80">{dish.desc}</p>
                   </div>
                 </motion.div>
               ))}
             </div>
-
-            <motion.div 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="mt-16"
-            >
-              <Link 
-                to="/menu" 
-                className="px-8 py-3 border border-gold-500/50 text-gold-400 uppercase tracking-widest text-sm hover:bg-gold-500/10 transition-all duration-300 rounded-full"
-              >
-                View Full Menu
-              </Link>
-            </motion.div>
           </div>
-        </div>
 
-        {/* The Ambience Preview */}
-        <div className="w-full py-32 px-6 flex justify-center border-t border-gold-500/10">
-          <div className="max-w-6xl w-full grid md:grid-cols-2 gap-16 items-center flex-col-reverse md:flex-row">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8 }}
-              className="relative rounded-2xl overflow-hidden border border-gold-500/30 shadow-[0_0_30px_rgba(207,164,90,0.15)] aspect-[4/3] w-full"
-            >
-              <img 
-                src="/assets/interior_2.jpg" 
-                alt="Banquet Hall Interior" 
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-4xl md:text-5xl font-display text-gold-500 mb-6 tracking-widest">The Ambience</h2>
-              <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                Our dining hall is designed to transport you to an era of elegance. Draped in luxurious purple and gold, illuminated by stunning neon accents, it sets the perfect stage for family gatherings, intimate dinners, and vibrant celebrations.
-              </p>
-              <Link to="/gallery" className="text-gold-500 hover:text-gold-400 flex items-center gap-2 font-medium tracking-widest uppercase text-sm group">
-                View Gallery <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Reviews Section */}
-        <div className="w-full py-32 px-4 flex flex-col items-center bg-backgroundAlt/60 backdrop-blur-lg border-t border-gold-500/20">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16 p-8 bg-background/40 backdrop-blur-sm border border-gold-500/10 rounded-xl"
-          >
-            <h2 className="text-4xl md:text-5xl font-display text-gold-500 mb-4 tracking-widest">Guest Experiences</h2>
-            <p className="text-gray-300 font-sans tracking-wide">Notes & Reviews from our visitors</p>
-            <div className="w-16 h-[2px] bg-gold-500/50 mx-auto mt-6"></div>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8 w-full max-w-7xl">
-            {reviews.map((review, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: i * 0.15 }}
-                className="p-8 border border-gold-500/20 bg-background/50 backdrop-blur-md rounded-lg hover:bg-background/80 hover:-translate-y-2 transition-all duration-300 flex flex-col gap-4 shadow-xl"
-              >
-                <div className="flex gap-1 text-gold-500 mb-2">
-                  {[1, 2, 3, 4, 5].map(star => <Star key={star} size={18} fill="currentColor" />)}
+          {/* Reviews Banner */}
+          <div className="w-full border-t-8 border-gold-500 bg-gold-500 text-black py-20 px-6 overflow-hidden">
+            <h2 className="text-center font-display font-black text-6xl md:text-8xl mb-16 uppercase">The Verdict</h2>
+            <div className="flex gap-8 overflow-x-auto pb-8 snap-x snap-mandatory hide-scrollbar">
+              {reviews.map((review, i) => (
+                <div key={i} className="min-w-[85vw] md:min-w-[400px] border-4 border-black p-8 bg-background text-gold-500 snap-center">
+                  <div className="flex gap-1 text-gold-500 mb-6">
+                    {[1, 2, 3, 4, 5].map(star => <Star key={star} size={24} fill="currentColor" />)}
+                  </div>
+                  <p className="font-sans font-bold text-xl uppercase leading-tight mb-8">
+                    "{review.text}"
+                  </p>
+                  <div className="border-t-4 border-gold-500 pt-4">
+                    <p className="font-display font-black text-2xl uppercase">{review.name}</p>
+                    <p className="text-sm uppercase tracking-widest text-white">{review.date}</p>
+                  </div>
                 </div>
-                <p className="text-gray-200 font-sans leading-relaxed flex-1 italic text-lg">
-                  "{review.text}"
-                </p>
-                <div className="mt-6 pt-4 border-t border-gold-500/20">
-                  <p className="font-display text-gold-400 tracking-wider text-xl">{review.name}</p>
-                  <p className="text-sm text-gray-400 uppercase tracking-widest mt-1">{review.date}</p>
-                </div>
-              </motion.div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 

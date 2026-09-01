@@ -36,7 +36,7 @@ export default function About() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-20">
-            <motion.div style={{ y: y2 }} className="text-xl md:text-3xl font-sans font-bold text-gray-200 leading-tight uppercase tracking-widest p-10 border-l-8 border-gold-500 bg-background/50 backdrop-blur-md">
+            <motion.div style={{ y: y2 }} className="text-xl md:text-3xl font-sans font-bold text-gray-200 leading-tight uppercase tracking-widest p-10 border-4 border-gold-500 bg-black/95 shadow-[15px_15px_0px_#cfa45a]">
               <p className="mb-10">We rebel against the ordinary. Located in the heart of Chhatina, Tehatta, Dolphin Hotel shatters the mold of traditional dining.</p>
               <p>We blend ancient Indian culinary secrets with aggressive, modern execution. Every dish is a statement.</p>
             </motion.div>

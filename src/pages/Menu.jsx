@@ -37,12 +37,12 @@ function MenuCard({ item }) {
       animate={{ rotateX, rotateY }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       style={{ perspective: 1000 }}
-      className="p-4 border border-gold-500/20 bg-backgroundAlt/50 rounded-lg hover:border-glow transition-colors cursor-default"
+      className="p-4 border-2 border-gold-500 bg-black/80 hover:bg-gold-500 hover:text-black transition-colors cursor-default group"
     >
       <div className="flex justify-between items-end">
-        <h3 className="text-lg font-display text-gray-200">{item.name}</h3>
-        <div className="flex-1 mx-4 border-b border-dotted border-gold-500/30 relative top-[-6px]"></div>
-        <span className="text-gold-400 font-medium">₹{item.price}</span>
+        <h3 className="text-lg font-display font-black uppercase tracking-widest text-white group-hover:text-black transition-colors">{item.name}</h3>
+        <div className="flex-1 mx-4 border-b-2 border-dotted border-gold-500/50 group-hover:border-black/50 relative top-[-6px]"></div>
+        <span className="text-gold-400 group-hover:text-black font-black text-xl">₹{item.price}</span>
       </div>
     </motion.div>
   );
@@ -62,38 +62,38 @@ export default function Menu() {
   const displayCategory = filteredCategories.find(c => c.category === activeCategory) || filteredCategories[0];
 
   return (
-    <PageTransition className="max-w-7xl mx-auto px-4 py-12 relative min-h-screen">
+    <PageTransition className="w-full relative min-h-screen">
       
       {/* Brutalist Menu Title */}
       <motion.div 
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-20 text-center relative z-10"
+        className="pt-32 pb-12 text-center relative z-10 border-b-8 border-gold-500 bg-black/90"
       >
-        <h1 className="text-[15vw] leading-[0.8] font-display font-black text-gold-500 mix-blend-screen opacity-90 text-glow-gold select-none">
+        <h1 className="text-[12vw] leading-[0.8] font-display font-black text-gold-500 text-glow-gold select-none uppercase">
           THE MENU
         </h1>
       </motion.div>
 
-      <div className="flex flex-col md:flex-row gap-8 lg:gap-16 relative z-20">
+      <div className="flex flex-col md:flex-row relative z-20 w-full">
         {/* Sidebar */}
-        <div className="md:w-1/4 flex flex-col gap-2 shrink-0 bg-backgroundAlt/40 backdrop-blur-md p-6 rounded-xl border border-gold-500/20 shadow-xl h-fit sticky top-32">
+        <div className="md:w-1/3 lg:w-1/4 flex flex-col shrink-0 bg-black/95 p-8 border-r-8 border-gold-500 min-h-screen">
           <input 
             type="text" 
             placeholder="Search menu..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="mb-6 p-3 bg-background/60 border border-gold-500/30 rounded text-white focus:outline-none focus:border-gold-500 transition-colors"
+            className="mb-8 p-4 bg-transparent border-4 border-gold-500 text-white font-sans uppercase tracking-widest focus:outline-none focus:bg-gold-500 focus:text-black transition-colors placeholder:text-gold-500/50 focus:placeholder:text-black/50"
           />
-          <div className="flex overflow-x-auto md:flex-col gap-2 pb-4 md:pb-0 scrollbar-hide">
+          <div className="flex flex-col gap-4">
             {filteredCategories.map((cat) => (
               <button
                 key={cat.category}
                 onClick={() => setActiveCategory(cat.category)}
-                className={`text-left px-4 py-3 whitespace-nowrap transition-all duration-300 rounded ${
+                className={`text-left px-6 py-4 transition-all duration-300 font-display font-black uppercase text-xl md:text-2xl border-4 ${
                   activeCategory === cat.category 
-                    ? 'bg-gold-500/20 text-gold-400 border-l-4 border-gold-400 font-medium' 
-                    : 'text-gray-300 hover:text-white hover:bg-background/40'
+                    ? 'bg-gold-500 text-black border-gold-500' 
+                    : 'text-gray-400 border-transparent hover:border-gold-500 hover:text-white'
                 }`}
               >
                 {cat.category}
@@ -103,7 +103,7 @@ export default function Menu() {
         </div>
 
         {/* Menu Items */}
-        <div className="flex-1 min-h-[500px] bg-backgroundAlt/40 backdrop-blur-md p-8 rounded-xl border border-gold-500/20 shadow-xl overflow-hidden" style={{ perspective: 1200 }}>
+        <div className="flex-1 bg-background/80 backdrop-blur-xl p-8 md:p-16 border-t-8 md:border-t-0 border-gold-500" style={{ perspective: 1200 }}>
           <AnimatePresence mode="wait">
             {displayCategory && (
               <motion.div
@@ -129,7 +129,8 @@ export default function Menu() {
                     visible: { opacity: 1, x: 0, filter: "blur(0px)" },
                     exit: { opacity: 0, x: 50, filter: "blur(10px)" }
                   }}
-                  className="text-3xl font-display text-gold-400 mb-8 border-b border-gold-500/30 pb-4 text-glow-gold"
+                  className="text-5xl md:text-7xl font-display font-black text-transparent mb-12 uppercase"
+                  style={{ WebkitTextStroke: '2px #cfa45a' }}
                 >
                   {displayCategory.category}
                 </motion.h2>
@@ -138,23 +139,20 @@ export default function Menu() {
                     <motion.div
                       key={item.name}
                       variants={{
-                        hidden: { opacity: 0, rotateX: -90, y: 50, z: -200 },
+                        hidden: { opacity: 0, scale: 0.92, y: 16 },
                         visible: { 
                           opacity: 1, 
-                          rotateX: 0, 
+                          scale: 1, 
                           y: 0, 
-                          z: 0,
-                          transition: { type: "spring", stiffness: 200, damping: 15 }
+                          transition: { type: "spring", stiffness: 300, damping: 20 }
                         },
                         exit: { 
                           opacity: 0, 
-                          rotateX: 90, 
-                          y: -50, 
-                          z: 100,
+                          scale: 0.92, 
+                          y: -16, 
                           transition: { duration: 0.2 }
                         }
                       }}
-                      style={{ transformOrigin: "top center" }}
                     >
                       <MenuCard item={item} />
                     </motion.div>
