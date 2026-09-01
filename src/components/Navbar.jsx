@@ -4,91 +4,82 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const links = [
     { name: 'Home', path: '/' },
-    { name: 'Architecture', path: '/architecture' },
+    { name: 'Menu', path: '/menu' },
+    { name: 'Gallery', path: '/gallery' },
+    { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' }
   ];
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 font-manrope ${
-        isScrolled ? 'bg-[#FF0000]/95 backdrop-blur-md py-4 shadow-lg' : 'bg-transparent py-8'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center">
-        <Link to="/" className="relative z-50 flex items-center gap-3 group">
-          <svg width="32" height="32" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:rotate-90 transition-transform duration-500">
-            <path fillRule="evenodd" clipRule="evenodd" d="M60 120C26.8629 120 0 93.1371 0 60V0C22.5654 0 42.2213 12.4569 52.4662 30.8691C38.4788 34.2089 28.0787 46.7902 28.0787 61.8006V63.1443C28.0787 79.9648 41.7146 93.6006 58.5353 93.6006H59.8789L59.8785 61.8006C59.8785 79.3633 74.1159 93.6006 91.6787 93.6006L91.6787 61.8006C91.6787 44.2783 77.5071 30.0661 60 30.0008L60 0H62.5352C94.2722 0 120 25.7279 120 57.4648V60C120 93.1371 93.1371 120 60 120Z" fill="white"/>
-          </svg>
-          <span className="text-white font-bold tracking-[0.2em] uppercase text-sm">S.P.D</span>
-        </Link>
+    <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between p-4 sm:p-5">
+      {/* Left */}
+      <Link to="/" className="flex items-center gap-2">
+        <svg width="26" height="26" viewBox="0 0 256 256" fill="#cfa45a" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 256 256 L 128 256 L 0 128 L 128 128 Z M 256 128 L 128 128 L 0 0 L 128 0 Z" />
+        </svg>
+        <span className="text-gold-500 text-2xl font-display italic tracking-widest font-bold">Dolphin</span>
+      </Link>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex gap-12 items-center">
-          {links.map((link) => (
-            <Link 
-              key={link.name}
-              to={link.path} 
-              className={`text-white text-sm uppercase tracking-widest transition-opacity hover:opacity-100 ${
-                location.pathname === link.path ? 'opacity-100 font-bold border-b border-white pb-1' : 'opacity-60'
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
-          <button className="px-6 py-2 bg-white text-[#FF0000] text-sm uppercase tracking-widest font-bold hover:bg-black hover:text-white transition-colors duration-300">
-            Access System
-          </button>
-        </div>
-
-        {/* Mobile Toggle */}
-        <button 
-          className="md:hidden relative z-50 text-white"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+      {/* Center pill */}
+      <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 bg-black/40 backdrop-blur-md border border-gold-500/30 rounded-none px-2 py-2 items-center gap-1 shadow-lg">
+        {links.map((link) => (
+          <Link
+            key={link.name}
+            to={link.path}
+            className={`px-4 py-1.5 rounded-none text-sm font-bold uppercase tracking-widest transition-colors ${
+              location.pathname === link.path 
+                ? 'bg-gold-500 text-black' 
+                : 'text-gold-500/80 hover:bg-gold-500/20 hover:text-gold-500'
+            }`}
+          >
+            {link.name}
+          </Link>
+        ))}
       </div>
 
-      {/* Mobile Menu */}
+      {/* Right */}
+      <Link 
+        to="/contact"
+        className="hidden md:block bg-gold-500 text-black text-sm font-bold uppercase tracking-widest px-6 py-2.5 rounded-none hover:bg-white hover:text-black transition-colors"
+      >
+        Book Table
+      </Link>
+
+      {/* Mobile Toggle */}
+      <button 
+        className="md:hidden text-gold-500 z-50 relative"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {isOpen ? <X size={28} /> : <Menu size={28} />}
+      </button>
+
+      {/* Mobile Nav */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-0 left-0 w-full h-screen bg-[#FF0000] flex flex-col items-center justify-center gap-8 z-40"
+            className="absolute top-0 left-0 w-full h-screen bg-black flex flex-col items-center justify-center gap-8 z-40 border-b-8 border-gold-500"
           >
             {links.map((link) => (
               <Link 
                 key={link.name}
                 to={link.path} 
                 onClick={() => setIsOpen(false)}
-                className="text-white text-3xl font-italiana uppercase tracking-widest"
+                className="text-gold-500 text-3xl font-display uppercase tracking-widest font-bold hover:text-white transition-colors"
               >
                 {link.name}
               </Link>
             ))}
-            <button className="mt-8 px-12 py-4 border border-white text-white text-sm uppercase tracking-widest font-bold hover:bg-white hover:text-[#FF0000] transition-colors duration-300">
-              Access System
-            </button>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </nav>
   );
 }

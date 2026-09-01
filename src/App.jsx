@@ -4,7 +4,9 @@ import { AnimatePresence, LayoutGroup } from 'framer-motion';
 import Lenis from 'lenis';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
-import Architecture from './pages/Architecture';
+import Menu from './pages/Menu';
+import Gallery from './pages/Gallery';
+import About from './pages/About';
 import Contact from './pages/Contact';
 
 function AnimatedRoutes() {
@@ -13,7 +15,9 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
-        <Route path="/architecture" element={<Architecture />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
     </AnimatePresence>
@@ -45,7 +49,7 @@ function App() {
 
   return (
     <Router>
-      <div className="relative min-h-screen text-white overflow-x-hidden bg-[#FF0000]">
+      <div className="relative min-h-screen text-white overflow-x-hidden bg-background">
         <LayoutGroup>
           <div className="relative z-10 flex flex-col min-h-screen">
             <Navbar />
