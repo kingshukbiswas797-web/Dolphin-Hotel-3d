@@ -1,40 +1,17 @@
 import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
-const pageVariants = {
-  initial: {
-    opacity: 0,
-    rotateY: -90,
-    z: -500,
-  },
-  in: {
-    opacity: 1,
-    rotateY: 0,
-    z: 0,
-  },
-  out: {
-    opacity: 0,
-    rotateY: 90,
-    z: -500,
-  },
-};
-
-const pageTransition = {
-  type: 'spring',
-  stiffness: 200,
-  damping: 20,
-  mass: 1,
-};
-
-export default function PageTransition({ children, className = "" }) {
+export default function PageTransition({ children }) {
+  const location = useLocation();
+  
   return (
     <motion.div
-      initial="initial"
-      animate="in"
-      exit="out"
-      variants={pageVariants}
-      transition={pageTransition}
-      className={`min-h-[calc(100vh-80px)] w-full ${className}`}
-      style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}
+      key={location.pathname}
+      initial={{ x: '20%', opacity: 0, filter: 'blur(10px)' }}
+      animate={{ x: 0, opacity: 1, filter: 'blur(0px)' }}
+      exit={{ x: '-20%', opacity: 0, filter: 'blur(10px)' }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="w-full min-h-screen"
     >
       {children}
     </motion.div>

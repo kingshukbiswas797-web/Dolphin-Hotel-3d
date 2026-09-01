@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { AnimatePresence, LayoutGroup } from 'framer-motion';
 import Lenis from 'lenis';
 import Navbar from './components/Navbar';
+import CurtainSplash from './components/CurtainSplash';
 import Home from './pages/Home';
 import Menu from './pages/Menu';
 import Gallery from './pages/Gallery';
@@ -25,6 +26,8 @@ function AnimatedRoutes() {
 }
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -49,8 +52,10 @@ function App() {
 
   return (
     <Router>
-      <div className="relative min-h-screen text-white overflow-x-hidden bg-background">
+      <div className="relative min-h-screen text-white overflow-x-hidden bg-black">
         <LayoutGroup>
+          {showSplash && <CurtainSplash onComplete={() => setShowSplash(false)} />}
+          
           <div className="relative z-10 flex flex-col min-h-screen">
             <Navbar />
             <main className="flex-1 flex flex-col">

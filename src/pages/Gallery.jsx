@@ -1,63 +1,53 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import PageTransition from '../components/PageTransition';
 
-const IMAGES = [
-  { url: '/assets/exterior_1.jpg', title: 'NIGHT EXTERIOR' },
-  { url: '/assets/interior_1.jpg', title: 'BANQUET HALL' },
-  { url: '/assets/exterior_2.jpg', title: 'BUILDING FRONT' },
-  { url: '/assets/interior_2.jpg', title: 'DINING SETUP' },
-];
-
 export default function Gallery() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: containerRef });
-  
-  return (
-    <PageTransition className="w-full overflow-hidden" ref={containerRef}>
-      <div className="w-full min-h-screen relative py-20 px-4 md:px-20">
-        
-        {/* Massive floating title */}
-        <motion.div 
-          style={{ x: useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]) }}
-          className="whitespace-nowrap sticky top-40 z-10 pointer-events-none mb-32"
-        >
-          <h1 
-            className="text-[18vw] leading-[0.8] font-display font-black text-transparent" 
-            style={{ WebkitTextStroke: '3px rgba(207,164,90,0.8)' }}
-          >
-            VISUAL ARCHIVE
-          </h1>
-        </motion.div>
+  const images = [
+    { src: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80', span: 'md:col-span-2 md:row-span-2' },
+    { src: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&q=80', span: 'col-span-1' },
+    { src: 'https://images.unsplash.com/photo-1588168333986-5b20928eb250?auto=format&fit=crop&q=80', span: 'col-span-1' },
+    { src: 'https://images.unsplash.com/photo-1544025162-84a14f494871?auto=format&fit=crop&q=80', span: 'md:col-span-2' },
+    { src: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&q=80', span: 'col-span-1' },
+    { src: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80', span: 'col-span-1' },
+  ];
 
-        <div className="flex flex-col gap-32 relative z-20 max-w-6xl mx-auto">
-          {IMAGES.map((img, i) => {
-            const isEven = i % 2 === 0;
-            return (
-              <motion.div
+  return (
+    <PageTransition>
+      <div className="min-h-screen bg-black pt-32 px-6 pb-20 font-sans">
+        <div className="max-w-7xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="mb-16 border-b border-gold-500/20 pb-8"
+          >
+            <h1 className="text-6xl md:text-8xl font-display font-black text-gold-500 uppercase tracking-widest">
+              Gallery
+            </h1>
+            <p className="text-white/60 uppercase tracking-[0.2em] mt-4 font-bold">
+              Visual exploration of our legacy
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[250px]">
+            {images.map((img, i) => (
+              <motion.div 
                 key={i}
-                initial={{ opacity: 0, y: 100, rotate: isEven ? -5 : 5 }}
-                whileInView={{ opacity: 1, y: 0, rotate: isEven ? -2 : 2 }}
-                viewport={{ once: true, margin: "-20%" }}
-                transition={{ type: "spring", stiffness: 60, damping: 20 }}
-                className={`relative w-full md:w-[70%] ${isEven ? 'self-start' : 'self-end'}`}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className={`relative group overflow-hidden border border-gold-500/20 ${img.span}`}
               >
-                <div className="relative group overflow-hidden border-4 border-gold-500 bg-black p-2 shadow-[20px_20px_0px_#000]">
-                  <img 
-                    src={img.url} 
-                    alt={img.title} 
-                    className="w-full h-[60vh] object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gold-500 mix-blend-multiply opacity-50 group-hover:opacity-0 transition-opacity duration-700"></div>
-                  
-                  {/* Brutalist Label */}
-                  <div className="absolute -bottom-6 -right-6 bg-gold-500 text-black px-6 py-2 transform -rotate-3 group-hover:rotate-0 transition-transform font-black text-2xl tracking-[0.2em] border-2 border-black">
-                    {img.title}
-                  </div>
-                </div>
+                <div className="absolute inset-0 bg-gold-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none" />
+                <img 
+                  src={img.src} 
+                  alt={`Gallery image ${i + 1}`}
+                  className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
+                />
               </motion.div>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </div>
     </PageTransition>
