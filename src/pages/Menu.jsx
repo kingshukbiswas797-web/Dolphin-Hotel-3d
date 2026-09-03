@@ -77,20 +77,20 @@ export default function Menu() {
 
       <div className="flex flex-col md:flex-row relative z-20 w-full">
         {/* Sidebar */}
-        <div className="md:w-1/3 lg:w-1/4 flex flex-col shrink-0 bg-black/95 p-8 border-r-8 border-gold-500 min-h-screen">
+        <div className="md:w-1/3 lg:w-1/4 flex flex-col shrink-0 bg-black/95 p-4 md:p-8 md:border-r-8 border-gold-500 md:min-h-screen">
           <input 
             type="text" 
             placeholder="Search menu..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="mb-8 p-4 bg-transparent border-4 border-gold-500 text-white font-sans uppercase tracking-widest focus:outline-none focus:bg-gold-500 focus:text-black transition-colors placeholder:text-gold-500/50 focus:placeholder:text-black/50"
+            className="mb-4 md:mb-8 p-3 md:p-4 bg-transparent border-2 md:border-4 border-gold-500 text-white font-sans uppercase tracking-widest focus:outline-none focus:bg-gold-500 focus:text-black transition-colors placeholder:text-gold-500/50 focus:placeholder:text-black/50 text-sm md:text-base w-full"
           />
-          <div className="flex flex-col gap-4">
+          <div className="flex md:flex-col gap-2 md:gap-4 overflow-x-auto md:overflow-visible pb-4 md:pb-0 hide-scrollbar snap-x">
             {filteredCategories.map((cat) => (
               <button
                 key={cat.category}
                 onClick={() => setActiveCategory(cat.category)}
-                className={`text-left px-6 py-4 transition-all duration-300 font-display font-black uppercase text-xl md:text-2xl border-4 ${
+                className={`text-left px-4 md:px-6 py-3 transition-all duration-300 font-display font-black uppercase text-sm md:text-2xl border-2 md:border-4 shrink-0 snap-start ${
                   activeCategory === cat.category 
                     ? 'bg-gold-500 text-black border-gold-500' 
                     : 'text-gray-400 border-transparent hover:border-gold-500 hover:text-white'

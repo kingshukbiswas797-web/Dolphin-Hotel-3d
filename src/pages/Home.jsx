@@ -112,13 +112,22 @@ export default function Home() {
   useEffect(() => {
     const handleMouseMove = (e) => {
       mouse.current = { x: e.clientX, y: e.clientY };
-      // If this is the first move, instantly jump the smooth cursor to the mouse
       if (smooth.current.x === -999) {
         smooth.current = { x: e.clientX, y: e.clientY };
       }
     };
+
+    const handleTouchMove = (e) => {
+      const touch = e.touches[0];
+      mouse.current = { x: touch.clientX, y: touch.clientY };
+      if (smooth.current.x === -999) {
+        smooth.current = { x: touch.clientX, y: touch.clientY };
+      }
+    };
     
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchstart', handleTouchMove, { passive: true });
     
     const render = () => {
       if (smooth.current.x !== -999) {
@@ -133,6 +142,8 @@ export default function Home() {
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchstart', handleTouchMove);
       cancelAnimationFrame(rafRef.current);
     };
   }, []);
