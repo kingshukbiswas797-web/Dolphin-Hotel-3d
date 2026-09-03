@@ -170,34 +170,49 @@ export default function Home() {
           {/* Heading */}
           <div className="relative z-50 flex flex-col items-center text-center px-4 mt-16 md:mt-0">
             <h1 className="text-white flex flex-col items-center">
-              <span className="block font-display italic font-normal text-6xl md:text-8xl text-gold-500 hero-anim hero-reveal drop-shadow-2xl mb-2" style={{ animationDelay: '0.2s' }}>
+              <motion.span 
+                initial={{ opacity: 0, filter: 'blur(10px)', y: 20 }}
+                animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+                transition={{ duration: 2.5, ease: "easeOut", delay: 0.5 }}
+                className="block font-script text-7xl md:text-9xl text-gold-500 drop-shadow-2xl mb-4"
+              >
                 Dolphin
-              </span>
-              <span className="block font-sans font-black text-4xl md:text-6xl tracking-[0.2em] uppercase hero-anim hero-reveal drop-shadow-2xl text-white" style={{ animationDelay: '0.4s' }}>
+              </motion.span>
+              <motion.span 
+                initial={{ opacity: 0, letterSpacing: '0em', y: 20 }}
+                animate={{ opacity: 1, letterSpacing: '0.2em', y: 0 }}
+                transition={{ duration: 2, ease: "easeOut", delay: 1.5 }}
+                className="block font-sans font-black text-4xl md:text-6xl uppercase drop-shadow-2xl text-white"
+              >
                 Hotel
-              </span>
+              </motion.span>
             </h1>
             
-            <p className="md:hidden text-white/80 font-sans text-sm mt-8 max-w-[280px] leading-relaxed text-center hero-anim hero-fade" style={{ animationDelay: '0.6s' }}>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 2, delay: 2.5 }}
+              className="md:hidden text-white/80 font-sans text-sm mt-8 max-w-[280px] leading-relaxed text-center"
+            >
               Culinary excellence blending traditional Indian heritage with deep coastal flavors.
             </p>
 
             <Link 
               to="/menu"
               className="mt-8 md:mt-12 bg-gold-500 hover:bg-white text-black text-xs md:text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-full transition-all hover:scale-[1.03] active:scale-95 shadow-[0_0_20px_rgba(207,164,90,0.3)] hero-anim hero-fade"
-              style={{ animationDelay: '0.7s' }}
+              style={{ animationDelay: '3s' }}
             >
               Discover Menu
             </Link>
           </div>
 
           {/* Desktop-only corner text */}
-          <div className="hidden md:block absolute bottom-24 left-16 max-w-[320px] z-50 hero-anim hero-fade" style={{ animationDelay: '0.7s' }}>
+          <div className="hidden md:block absolute bottom-24 left-16 max-w-[320px] z-50 hero-anim hero-fade" style={{ animationDelay: '3.2s' }}>
             <p className="text-sm text-white/90 leading-relaxed font-sans uppercase tracking-widest border-l border-gold-500 pl-6 drop-shadow-md">
               Every ingredient is carefully sourced, blending traditional Indian heritage with classical culinary techniques.
             </p>
           </div>
-          <div className="hidden md:flex absolute bottom-24 right-16 max-w-[340px] flex-col items-start gap-6 z-50 hero-anim hero-fade" style={{ animationDelay: '0.8s' }}>
+          <div className="hidden md:flex absolute bottom-24 right-16 max-w-[340px] flex-col items-start gap-6 z-50 hero-anim hero-fade" style={{ animationDelay: '3.4s' }}>
             <p className="text-sm text-white/90 leading-relaxed font-sans drop-shadow-md">
               Our interactive menus let you peel back the layers of flavor to trace how spices, history, and deep time combine to shape every dish we serve.
             </p>
