@@ -152,7 +152,10 @@ export default function Home() {
   return (
     <PageTransition>
       {/* Snap container for smooth section sliding */}
-      <div className="w-full bg-black font-sans h-screen overflow-y-auto snap-y snap-mandatory hide-scrollbar relative">
+      <div 
+        className="w-full bg-black font-sans h-screen overflow-y-auto snap-y snap-mandatory hide-scrollbar relative"
+        data-lenis-prevent="true"
+      >
         
         {/* HERO SECTION */}
         <section className="relative w-full overflow-hidden h-screen snap-start shrink-0 flex flex-col justify-center bg-black">
