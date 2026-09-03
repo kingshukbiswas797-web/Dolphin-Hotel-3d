@@ -215,20 +215,20 @@ export default function Home() {
         </section>
 
         {/* ELEGANT PHILOSOPHY SECTION */}
-        <section className="relative w-full h-screen snap-start shrink-0 bg-[#0a0a0a] flex items-center justify-center p-8 md:p-24 overflow-hidden">
-          <div className="max-w-6xl w-full grid md:grid-cols-2 gap-16 items-center relative z-10">
+        <section className="relative w-full min-h-[100dvh] md:h-screen md:snap-start shrink-0 bg-[#0a0a0a] flex items-center justify-center px-6 py-24 md:p-24 overflow-hidden">
+          <div className="max-w-6xl w-full flex flex-col-reverse md:grid md:grid-cols-2 gap-10 md:gap-16 items-center relative z-10 mt-10 md:mt-0">
             <motion.div 
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
               viewport={{ margin: "-20%" }}
-              className="flex flex-col justify-center"
+              className="flex flex-col justify-center text-center md:text-left"
             >
               <span className="text-gold-500 font-sans tracking-[0.3em] uppercase text-xs font-bold mb-4">Our Legacy</span>
-              <h2 className="text-4xl md:text-6xl font-display font-light text-white uppercase leading-[1.1] mb-10">
-                Culinary excellence <br/> <span className="text-gold-500 italic font-normal">is not polite.</span>
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-display font-light text-white uppercase leading-[1.1] mb-6 md:mb-10">
+                Culinary excellence <br className="hidden md:block"/> <span className="text-gold-500 italic font-normal">is not polite.</span>
               </h2>
-              <p className="text-lg text-white/60 font-sans font-light leading-relaxed max-w-md">
+              <p className="text-sm md:text-lg text-white/60 font-sans font-light leading-relaxed max-w-md mx-auto md:mx-0">
                 It is a bold statement of flavor, history, and aggression. We don't just serve food; we serve centuries of perfected coastal and traditional Indian recipes, crafted to leave an unforgettable mark on your palate.
               </p>
             </motion.div>
@@ -238,7 +238,7 @@ export default function Home() {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.2, ease: "easeOut" }}
               viewport={{ margin: "-20%" }}
-              className="relative aspect-[3/4] md:aspect-square w-full rounded-t-full overflow-hidden border border-gold-500/20"
+              className="relative aspect-square w-full max-w-[300px] md:max-w-none mx-auto rounded-t-full overflow-hidden border border-gold-500/20"
             >
               <img 
                 src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=800" 
@@ -250,7 +250,7 @@ export default function Home() {
         </section>
 
         {/* ELEGANT SIGNATURES SECTION */}
-        <section className="relative w-full min-h-screen snap-start shrink-0 bg-black py-24 px-6 md:px-16 flex flex-col justify-center">
+        <section className="relative w-full min-h-[100dvh] md:snap-start shrink-0 bg-black py-24 px-6 md:px-16 flex flex-col justify-center">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -289,8 +289,8 @@ export default function Home() {
         </section>
 
         {/* REVIEWS SECTION */}
-        <section className="relative w-full h-screen snap-start shrink-0 bg-[#0a0a0a] flex flex-col justify-center items-center py-20 px-6 overflow-hidden">
-          <h2 className="text-sm font-sans font-bold tracking-[0.3em] text-gold-500 uppercase mb-16">The Verdict</h2>
+        <section className="relative w-full min-h-[100dvh] md:h-screen md:snap-start shrink-0 bg-[#0a0a0a] flex flex-col justify-center items-center py-24 px-6 overflow-hidden">
+          <h2 className="text-sm font-sans font-bold tracking-[0.3em] text-gold-500 uppercase mb-12 md:mb-16">The Verdict</h2>
           
           <div className="flex gap-8 overflow-x-auto pb-8 snap-x snap-mandatory hide-scrollbar w-full max-w-7xl px-4 md:px-12">
             {reviews.map((review, i) => (
