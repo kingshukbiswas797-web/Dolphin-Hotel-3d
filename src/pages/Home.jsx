@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Star, ChevronDown } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
@@ -81,9 +81,9 @@ function RevealLayer({ image, cursorX, cursorY }) {
 
   return (
     <>
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" style={{ display: 'none' }} />
+      <canvas ref={canvasRef} className="hidden" />
       <div 
-        className="absolute inset-0 bg-center bg-cover bg-no-repeat z-30 pointer-events-none grayscale contrast-125"
+        className="hidden md:block absolute inset-0 bg-center bg-cover bg-no-repeat z-30 pointer-events-none grayscale contrast-125"
         style={{ 
           backgroundImage: `url(${image})`,
           maskImage: `url(${maskDataUrl})`,
@@ -105,24 +105,17 @@ export default function Home() {
   const [cursorPos, setCursorPos] = useState({ x: -999, y: -999 });
 
   useEffect(() => {
+    // Only run expensive spotlight tracking on desktop
+    if (window.innerWidth < 768) return;
+
     const handleMouseMove = (e) => {
       mouse.current = { x: e.clientX, y: e.clientY };
       if (smooth.current.x === -999) {
         smooth.current = { x: e.clientX, y: e.clientY };
       }
     };
-
-    const handleTouchMove = (e) => {
-      const touch = e.touches[0];
-      mouse.current = { x: touch.clientX, y: touch.clientY };
-      if (smooth.current.x === -999) {
-        smooth.current = { x: touch.clientX, y: touch.clientY };
-      }
-    };
     
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
-    window.addEventListener('touchstart', handleTouchMove, { passive: true });
     
     const render = () => {
       if (smooth.current.x !== -999) {
@@ -137,8 +130,6 @@ export default function Home() {
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchstart', handleTouchMove);
       cancelAnimationFrame(rafRef.current);
     };
   }, []);
@@ -151,137 +142,141 @@ export default function Home() {
 
   return (
     <PageTransition>
-      {/* Snap container for smooth section sliding */}
-      <div 
-        className="w-full bg-black font-sans h-screen overflow-y-auto snap-y snap-mandatory hide-scrollbar relative"
-        data-lenis-prevent="true"
-      >
+      {/* 
+        Removed all snap-y classes and hidden overflow so mobile scrolls beautifully. 
+        No data-lenis-prevent needed anymore because there's no internal scroll box. 
+      */}
+      <div className="w-full bg-black font-sans relative">
         
         {/* HERO SECTION */}
-        <section className="relative w-full overflow-hidden h-screen snap-start shrink-0 flex flex-col justify-center bg-black">
+        <section className="relative w-full h-[100dvh] flex flex-col justify-center items-center bg-black overflow-hidden">
           
-          {/* Base Image (z-10) - Brightness increased for clarity */}
+          {/* Base Image */}
           <div 
-            className="absolute inset-0 bg-center bg-cover bg-no-repeat z-10 hero-zoom brightness-90"
+            className="absolute inset-0 bg-center bg-cover bg-no-repeat z-10 hero-zoom brightness-[0.6] md:brightness-90"
             style={{ backgroundImage: 'url(/assets/interior_1.jpg)' }}
           />
 
-          {/* Reveal Layer (z-30) */}
+          {/* Reveal Layer (Hidden on mobile for performance and clarity) */}
           <RevealLayer 
             image="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=1280" 
             cursorX={cursorPos.x} 
             cursorY={cursorPos.y} 
           />
 
-          {/* Dark gradient overlay for text readability */}
-          <div className="absolute inset-0 z-40 bg-gradient-to-b from-black/60 via-transparent to-black/80 pointer-events-none"></div>
+          {/* Gradient overlay to ensure text pops on mobile */}
+          <div className="absolute inset-0 z-40 bg-gradient-to-t from-black via-black/40 to-black/60 md:bg-gradient-to-b md:from-black/60 md:via-transparent md:to-black/80 pointer-events-none"></div>
 
-          {/* Heading (z-50) */}
-          <div className="absolute top-[25%] left-0 right-0 flex flex-col items-center text-center px-5 pointer-events-none z-50">
-            <h1 className="text-white leading-[0.95]">
-              <span className="block font-display italic font-normal text-6xl sm:text-8xl md:text-[9vw] text-gold-500 tracking-[-0.02em] hero-anim hero-reveal drop-shadow-2xl" style={{ animationDelay: '0.25s' }}>
+          {/* Heading */}
+          <div className="relative z-50 flex flex-col items-center text-center px-4 mt-16 md:mt-0">
+            <h1 className="text-white flex flex-col items-center">
+              <span className="block font-display italic font-normal text-6xl md:text-8xl text-gold-500 hero-anim hero-reveal drop-shadow-2xl mb-2" style={{ animationDelay: '0.2s' }}>
                 Dolphin
               </span>
-              <span className="block font-display font-black text-5xl sm:text-7xl md:text-[8vw] tracking-[0.1em] uppercase hero-anim hero-reveal -mt-2 drop-shadow-2xl text-white" style={{ animationDelay: '0.42s' }}>
+              <span className="block font-sans font-black text-4xl md:text-6xl tracking-[0.2em] uppercase hero-anim hero-reveal drop-shadow-2xl text-white" style={{ animationDelay: '0.4s' }}>
                 Hotel
               </span>
             </h1>
-          </div>
-
-          {/* Bottom-left paragraph */}
-          <div className="hidden sm:block absolute bottom-24 left-10 md:left-20 max-w-[320px] z-50 hero-anim hero-fade" style={{ animationDelay: '0.7s' }}>
-            <p className="text-sm text-white/90 leading-relaxed font-sans uppercase tracking-widest border-l border-gold-500 pl-6 drop-shadow-md">
-              Every ingredient is carefully sourced, blending traditional Indian heritage with classical culinary techniques across generations.
+            
+            <p className="md:hidden text-white/80 font-sans text-sm mt-8 max-w-[280px] leading-relaxed text-center hero-anim hero-fade" style={{ animationDelay: '0.6s' }}>
+              Culinary excellence blending traditional Indian heritage with deep coastal flavors.
             </p>
-          </div>
 
-          {/* Bottom-right block */}
-          <div className="absolute bottom-16 sm:bottom-24 left-5 right-5 sm:left-auto sm:right-10 md:right-20 max-w-full sm:max-w-[340px] flex flex-col items-start gap-6 z-50 hero-anim hero-fade" style={{ animationDelay: '0.85s' }}>
-            <p className="text-xs sm:text-sm text-white/90 leading-relaxed font-sans drop-shadow-md">
-              Our interactive menus let you peel back the layers of flavor to trace how spices, history, and deep time combine to shape every dish we serve.
-            </p>
             <Link 
               to="/menu"
-              className="bg-gold-500 hover:bg-white text-black text-xs md:text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-full transition-all hover:scale-[1.03] active:scale-95 shadow-[0_0_20px_rgba(207,164,90,0.3)] pointer-events-auto"
+              className="mt-8 md:mt-12 bg-gold-500 hover:bg-white text-black text-xs md:text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-full transition-all hover:scale-[1.03] active:scale-95 shadow-[0_0_20px_rgba(207,164,90,0.3)] hero-anim hero-fade"
+              style={{ animationDelay: '0.7s' }}
             >
               Discover Menu
             </Link>
           </div>
 
-          {/* Scroll down indicator */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 animate-bounce text-gold-500 opacity-70">
+          {/* Desktop-only corner text */}
+          <div className="hidden md:block absolute bottom-24 left-16 max-w-[320px] z-50 hero-anim hero-fade" style={{ animationDelay: '0.7s' }}>
+            <p className="text-sm text-white/90 leading-relaxed font-sans uppercase tracking-widest border-l border-gold-500 pl-6 drop-shadow-md">
+              Every ingredient is carefully sourced, blending traditional Indian heritage with classical culinary techniques.
+            </p>
+          </div>
+          <div className="hidden md:flex absolute bottom-24 right-16 max-w-[340px] flex-col items-start gap-6 z-50 hero-anim hero-fade" style={{ animationDelay: '0.8s' }}>
+            <p className="text-sm text-white/90 leading-relaxed font-sans drop-shadow-md">
+              Our interactive menus let you peel back the layers of flavor to trace how spices, history, and deep time combine to shape every dish we serve.
+            </p>
+          </div>
+
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 animate-bounce text-gold-500 opacity-70 hidden md:block">
             <ChevronDown size={32} strokeWidth={1} />
           </div>
         </section>
 
-        {/* ELEGANT PHILOSOPHY SECTION */}
-        <section className="relative w-full min-h-[100dvh] md:h-screen md:snap-start shrink-0 bg-[#0a0a0a] flex items-center justify-center px-6 py-24 md:p-24 overflow-hidden">
-          <div className="max-w-6xl w-full flex flex-col-reverse md:grid md:grid-cols-2 gap-10 md:gap-16 items-center relative z-10 mt-10 md:mt-0">
+        {/* PHILOSOPHY SECTION */}
+        <section className="relative w-full bg-[#0a0a0a] py-20 md:py-32 px-5 md:px-16 flex justify-center overflow-hidden">
+          <div className="max-w-6xl w-full flex flex-col md:grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+            {/* Image comes first on mobile */}
             <motion.div 
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}
-              viewport={{ margin: "-20%" }}
-              className="flex flex-col justify-center text-center md:text-left"
-            >
-              <span className="text-gold-500 font-sans tracking-[0.3em] uppercase text-xs font-bold mb-4">Our Legacy</span>
-              <h2 className="text-3xl sm:text-4xl md:text-6xl font-display font-light text-white uppercase leading-[1.1] mb-6 md:mb-10">
-                Culinary excellence <br className="hidden md:block"/> <span className="text-gold-500 italic font-normal">is not polite.</span>
-              </h2>
-              <p className="text-sm md:text-lg text-white/60 font-sans font-light leading-relaxed max-w-md mx-auto md:mx-0">
-                It is a bold statement of flavor, history, and aggression. We don't just serve food; we serve centuries of perfected coastal and traditional Indian recipes, crafted to leave an unforgettable mark on your palate.
-              </p>
-            </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-              viewport={{ margin: "-20%" }}
-              className="relative aspect-square w-full max-w-[300px] md:max-w-none mx-auto rounded-t-full overflow-hidden border border-gold-500/20"
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+              className="order-1 md:order-2 relative aspect-[4/5] md:aspect-square w-full max-w-[320px] md:max-w-none mx-auto rounded-t-full overflow-hidden border border-gold-500/20"
             >
               <img 
-                src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=800" 
+                src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=600" 
                 alt="Chef preparing food" 
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105"
               />
             </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="order-2 md:order-1 flex flex-col justify-center text-center md:text-left"
+            >
+              <span className="text-gold-500 font-sans tracking-[0.3em] uppercase text-[10px] md:text-xs font-bold mb-4">Our Legacy</span>
+              <h2 className="text-3xl md:text-6xl font-display font-light text-white leading-[1.2] mb-6 md:mb-10">
+                Culinary excellence <br className="hidden md:block"/> <span className="text-gold-500 italic font-normal">is not polite.</span>
+              </h2>
+              <p className="text-sm md:text-lg text-white/60 font-sans font-light leading-relaxed max-w-sm md:max-w-md mx-auto md:mx-0">
+                It is a bold statement of flavor, history, and aggression. We don't just serve food; we serve centuries of perfected coastal and traditional Indian recipes, crafted to leave an unforgettable mark on your palate.
+              </p>
+            </motion.div>
           </div>
         </section>
 
-        {/* ELEGANT SIGNATURES SECTION */}
-        <section className="relative w-full min-h-[100dvh] md:snap-start shrink-0 bg-black py-24 px-6 md:px-16 flex flex-col justify-center">
+        {/* SIGNATURES SECTION */}
+        <section className="relative w-full bg-black py-20 md:py-32 px-5 md:px-16 flex flex-col items-center">
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ margin: "-20%" }}
-            className="text-center mb-16"
+            viewport={{ once: true }}
+            className="text-center mb-12 md:mb-20"
           >
-            <h2 className="text-sm font-sans font-bold tracking-[0.3em] text-gold-500 uppercase mb-4">Curated Perfection</h2>
-            <h3 className="text-4xl md:text-5xl font-display text-white uppercase">Signature Dishes</h3>
+            <h2 className="text-[10px] md:text-xs font-sans font-bold tracking-[0.3em] text-gold-500 uppercase mb-3">Curated Perfection</h2>
+            <h3 className="text-3xl md:text-5xl font-display text-white uppercase">Signature Dishes</h3>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 max-w-7xl mx-auto w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 max-w-7xl mx-auto w-full">
             {signatureDishes.map((dish, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ margin: "-10%" }}
-                transition={{ duration: 0.6, delay: i * 0.15 }}
-                className="group cursor-pointer flex flex-col gap-6"
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="group flex flex-col gap-5"
               >
-                <div className="aspect-[4/5] overflow-hidden rounded-t-full border border-gold-500/20 relative">
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10" />
+                <div className="aspect-[4/3] sm:aspect-[4/5] overflow-hidden rounded-t-[40px] md:rounded-t-full border border-gold-500/20 relative">
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10" />
                   <img 
                     src={dish.img} 
                     alt={dish.title}
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                   />
                 </div>
-                <div className="text-center px-4">
-                  <h4 className="font-display text-xl text-gold-500 uppercase mb-3">{dish.title}</h4>
-                  <p className="text-xs font-light tracking-widest uppercase text-white/50 leading-relaxed">{dish.desc}</p>
+                <div className="text-center px-2">
+                  <h4 className="font-display text-lg md:text-xl text-gold-500 uppercase mb-2">{dish.title}</h4>
+                  <p className="text-[11px] md:text-xs font-light tracking-widest uppercase text-white/50 leading-relaxed">{dish.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -289,28 +284,28 @@ export default function Home() {
         </section>
 
         {/* REVIEWS SECTION */}
-        <section className="relative w-full min-h-[100dvh] md:h-screen md:snap-start shrink-0 bg-[#0a0a0a] flex flex-col justify-center items-center py-24 px-6 overflow-hidden">
-          <h2 className="text-sm font-sans font-bold tracking-[0.3em] text-gold-500 uppercase mb-12 md:mb-16">The Verdict</h2>
+        <section className="relative w-full bg-[#0a0a0a] py-20 md:py-32 px-0 overflow-hidden flex flex-col items-center">
+          <h2 className="text-[10px] md:text-xs font-sans font-bold tracking-[0.3em] text-gold-500 uppercase mb-12 md:mb-16">The Verdict</h2>
           
-          <div className="flex gap-8 overflow-x-auto pb-8 snap-x snap-mandatory hide-scrollbar w-full max-w-7xl px-4 md:px-12">
+          <div className="flex gap-4 md:gap-8 overflow-x-auto pb-8 snap-x snap-mandatory hide-scrollbar w-full px-5 md:px-12">
             {reviews.map((review, i) => (
               <motion.div 
                 key={i} 
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ margin: "-20%" }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="min-w-[85vw] md:min-w-[450px] border border-gold-500/20 p-10 md:p-14 bg-black/50 backdrop-blur-sm snap-center flex flex-col justify-between"
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="min-w-[85vw] sm:min-w-[400px] md:min-w-[450px] border border-gold-500/20 p-8 md:p-14 bg-black/50 backdrop-blur-sm snap-center flex flex-col justify-between"
               >
-                <div className="flex gap-1 text-gold-500 mb-8 justify-center">
-                  {[1, 2, 3, 4, 5].map(star => <Star key={star} size={18} fill="currentColor" />)}
+                <div className="flex gap-1 text-gold-500 mb-6 md:mb-8 justify-center">
+                  {[1, 2, 3, 4, 5].map(star => <Star key={star} size={16} fill="currentColor" />)}
                 </div>
-                <p className="font-display italic text-2xl md:text-3xl text-white leading-relaxed text-center mb-10">
+                <p className="font-display italic text-xl md:text-3xl text-white leading-relaxed text-center mb-8 md:mb-10">
                   "{review.text}"
                 </p>
                 <div className="text-center border-t border-gold-500/20 pt-6">
-                  <p className="font-sans font-bold text-sm tracking-widest text-gold-500 uppercase mb-1">{review.name}</p>
-                  <p className="text-xs uppercase tracking-widest text-white/40">{review.date}</p>
+                  <p className="font-sans font-bold text-[11px] md:text-sm tracking-widest text-gold-500 uppercase mb-1">{review.name}</p>
+                  <p className="text-[10px] md:text-xs uppercase tracking-widest text-white/40">{review.date}</p>
                 </div>
               </motion.div>
             ))}
