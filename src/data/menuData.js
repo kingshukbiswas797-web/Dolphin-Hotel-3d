@@ -40,38 +40,74 @@ export const menuData = [
   {
     category: "Egg Variety",
     items: [
-      { name: "Egg Curry", price: 80 },
-      { name: "Egg Bhurjee", price: 80 },
-      { name: "Egg Masala Omlet", price: 60 }
+      { name: "Egg Curry", price: 90 },
+      { name: "Egg Bhurjee", price: 90 },
+      { name: "Egg Masala Omlet", price: 70 }
     ]
   },
   {
     category: "Murg Special (Chicken)",
     items: [
-      { name: "Balti Chicken", price: 200 },
-      { name: "Chicken Kasha", price: 150 },
-      { name: "Chicken Kadhai", price: 220 },
-      { name: "Chicken Masala", price: 170 },
-      { name: "Chicken Butter Masala", price: 270 },
-      { name: "Chicken Tikka Masala", price: 250 },
-      { name: "Chicken Tengri Masala", price: 270 },
-      { name: "Chicken Resmi Butter Masala", price: 260 },
-      { name: "Handi Chicken (Full)", price: 380 },
-      { name: "Handi Chicken (Half)", price: 200 },
-      { name: "Dollphin Special MURG", price: 650 }
+      { name: "Balti Chicken", price: 230 },
+      { name: "Chicken Kasha", price: 170 },
+      { name: "Chicken Kadhai", price: 250 },
+      { name: "Chicken Masala", price: 200 },
+      { name: "Chicken Butter Masala", price: 310 },
+      { name: "Chicken Tikka Masala", price: 290 },
+      { name: "Chicken Tengri Masala", price: 310 },
+      { name: "Chicken Resmi Butter Masala", price: 300 },
+      { name: "Handi Chicken (Full)", price: 440 },
+      { name: "Handi Chicken (Half)", price: 230 },
+      { name: "Chicken Maharani", price: 350 },
+      { name: "Chicken Hyderabadi", price: 320 },
+      { name: "Dollphin Special Murg", price: 750 }
     ]
   },
   {
     category: "Mutton Ki Bahar",
     items: [
-      { name: "Balti Mutton", price: 360 },
-      { name: "Mutton Kasha", price: 270 },
-      { name: "Mutton Keema", price: 360 },
-      { name: "Mutton Masala", price: 280 },
-      { name: "Mutton Do-pyaza", price: 280 },
-      { name: "Mutton Handi (Full 8pc)", price: 690 },
-      { name: "Mutton Handi (Half 4pc)", price: 360 },
-      { name: "Mutton Butter Masala", price: 300 }
+      { name: "Balti Mutton", price: 410 },
+      { name: "Mutton Kasha", price: 310 },
+      { name: "Mutton Keema", price: 410 },
+      { name: "Mutton Masala", price: 320 },
+      { name: "Mutton Do-pyaza", price: 320 },
+      { name: "Mutton Handi (Full 8pc)", price: 790 },
+      { name: "Mutton Handi (Half 4pc)", price: 410 },
+      { name: "Mutton Butter Masala", price: 350 }
+    ]
+  },
+  {
+    category: "Indian Breads",
+    items: [
+      { name: "Plain Naan", price: 30 },
+      { name: "Butter Naan", price: 40 },
+      { name: "Masala Kulcha", price: 50 },
+      { name: "Aloo Paratha", price: 40 },
+      { name: "Tandoori Roti", price: 20 },
+      { name: "Butter Roti", price: 25 },
+      { name: "Romali Roti", price: 20 },
+      { name: "Paratha Lachha", price: 40 },
+      { name: "Garlic Naan", price: 50 }
+    ]
+  },
+  {
+    category: "Rice (Flavour)",
+    items: [
+      { name: "Basmoti RICE", price: 50 },
+      { name: "Jeera RICE", price: 60 },
+      { name: "Indian Fried RICE", price: 120 },
+      { name: "Chicken Hongkong RICE", price: 140 },
+      { name: "Chicken Shate", price: 180 },
+      { name: "Chicken Singapore RICE", price: 190 },
+      { name: "Chicken Gold Coin (8pc)", price: 210 },
+      { name: "Chicken Finger", price: 180 },
+      { name: "Veg Polao", price: 120 },
+      { name: "Vegetable Biriyani", price: 140 },
+      { name: "Chicken Biriyani", price: 140 },
+      { name: "Chicken Matka Biriyani", price: 160 },
+      { name: "Mutton Biriyani", price: 180 },
+      { name: "Mutton Matka Biriyani", price: 200 },
+      { name: "Egg Biriyani", price: 110 }
     ]
   },
   {
