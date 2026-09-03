@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, LayoutGroup } from 'framer-motion';
 import Lenis from 'lenis';
+import { PhoneCall } from 'lucide-react';
 import Navbar from './components/Navbar';
 import CurtainSplash from './components/CurtainSplash';
 import Home from './pages/Home';
@@ -56,12 +57,21 @@ function App() {
         <LayoutGroup>
           {showSplash && <CurtainSplash onComplete={() => setShowSplash(false)} />}
           
-          <div className="relative z-10 flex flex-col min-h-screen">
+          <div className="relative z-10 flex flex-col min-h-screen overflow-hidden">
             <Navbar />
             <main className="flex-1 flex flex-col">
               <AnimatedRoutes />
             </main>
           </div>
+
+          {/* Floating Call Button */}
+          <a 
+            href="tel:+917797188188"
+            className="fixed bottom-6 right-6 z-[200] bg-gold-500 hover:bg-white text-black p-4 rounded-full shadow-[0_0_20px_rgba(207,164,90,0.5)] transition-all hover:scale-110 active:scale-95 group flex items-center gap-3 overflow-hidden"
+          >
+            <PhoneCall size={24} className="group-hover:animate-bounce" />
+            <span className="hidden md:block font-bold tracking-widest uppercase text-sm pr-2">Call Now</span>
+          </a>
         </LayoutGroup>
       </div>
     </Router>
