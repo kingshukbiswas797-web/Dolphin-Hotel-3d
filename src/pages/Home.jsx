@@ -195,7 +195,7 @@ export default function Home() {
               className="md:hidden text-white/80 font-sans text-sm mt-8 max-w-[280px] leading-relaxed text-center"
             >
               Culinary excellence blending traditional Indian heritage with deep coastal flavors.
-            </p>
+            </motion.p>
 
             <Link 
               to="/menu"
