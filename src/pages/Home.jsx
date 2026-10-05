@@ -13,12 +13,12 @@ const signatureDishes = [
   {
     title: "Hilsa Sorse",
     desc: "Aggressive mustard notes cutting through rich, slow-cooked river fish.",
-    img: "https://images.unsplash.com/photo-1588168333986-5b20928eb250?auto=format&fit=crop&q=80&w=600"
+    img: "/assets/hilsa_sorse.jpg"
   },
   {
     title: "Mutton Kadhai",
     desc: "Robust flavors cooked in a traditional wok with fiery coastal spices.",
-    img: "https://images.unsplash.com/photo-1603894584373-5ac82b6ae398?auto=format&fit=crop&q=80&w=600"
+    img: "/assets/mutton_kadhai.jpg"
   },
   {
     title: "Prawn Malai Curry",
